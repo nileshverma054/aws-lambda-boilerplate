@@ -1,0 +1,52 @@
+version = 0.1
+
+[dev.deploy.parameters]
+stack_name = "aws-lambda-app"
+s3_bucket = "sambucket-dev"
+s3_prefix = "my-app"
+region = "us-east-1"
+confirm_changeset = false
+capabilities = "CAPABILITY_IAM"
+disable_rollback = false
+on_failure = "DELETE"
+fail_on_empty_changeset = false
+role_arn = "arn:aws:iam::123456789:role/example-role"
+parameter_overrides = [
+    "VpcSecurityGroup=sg-ajaHSJASJHJS",
+    "VpcSubnet1=subnet-kfdsfhsdkh",
+    "VpcSubnet2=subnet-ahkskdaas"
+]
+
+[qa.deploy.parameters]
+stack_name = "aws-lambda-app"
+s3_bucket = "sambucket-qa"
+s3_prefix = "my-app"
+region = "us-east-1"
+confirm_changeset = false
+capabilities = "CAPABILITY_IAM"
+disable_rollback = false
+on_failure = "DELETE"
+fail_on_empty_changeset = false
+role_arn = "arn:aws:iam::123456789:role/example-role"
+parameter_overrides = [
+    "VpcSecurityGroup=sg-ajaHSJASJHJS",
+    "VpcSubnet1=subnet-kfdsfhsdkh",
+    "VpcSubnet2=subnet-ahkskdaas"
+]
+
+[production.deploy.parameters]
+stack_name = "aws-lambda-app"
+s3_bucket = "sambucket-production"
+s3_prefix = "my-app"
+region = "us-east-1"
+confirm_changeset = false
+capabilities = "CAPABILITY_IAM"
+disable_rollback = false
+on_failure = "DELETE"
+fail_on_empty_changeset = false
+role_arn = "arn:aws:iam::123456789:role/example-role"
+parameter_overrides = [
+    "VpcSecurityGroup=sg-ajaHSJASJHJS",
+    "VpcSubnet1=subnet-kfdsfhsdkh",
+    "VpcSubnet2=subnet-ahkskdaas"
+]

@@ -1,0 +1,20 @@
+{
+   "Records":[
+      {
+         "messageId":"2da5ddcf-8f9a-49f2-b183-08c307bf3701",
+         "receiptHandle":"AQEBm46BKx0yMk6kwMKiUyd7Tc3BMitOhrQ3NXyIwMiiBMjWvSEVhpFcwpZBRlBy1q0Kw+XPaYyzVikhAmfYu/1FdHjJRKe/pJ+3MRRzpTJZlMXyW9ArI4vIfosYdhxOcsawbG4CHG/M6/xlJHUd66l0LI3bnR24e5kkO9GyNPMKYNlJwliKEbvFeki79ioYcjlDBi4XbHbVwPGbQh9lySdMcKD53M2CQwFX9iXzQD3Af3AJSYVM5DhDmEMRc103o5BN21FPy/qMGAcgM1cYqxrHwlsfQSY7c/416ZNSamvmbZ1Qadwflzyz3HbhYMCBS697zeaeUBtXGNd76hpv3ExRpylDXA6n0u3R1oTaRxnj9gdQq5o50TbtRe4eVQ+nCgbSA9lpln14fvULWKJy9G9iNA==",
+         "body":"{\"request_id\": \"185ef46a-f474-4d5b-9c44-61c86be7b0a2\", \"user_id\": 1234, \"username\": \"user@example.com\"}",
+         "attributes":{
+            "ApproximateReceiveCount":"1",
+            "SentTimestamp":"1684923538427",
+            "SenderId":"AROAJGPJ57J7E2U5IBTEQ:i-00cdad87dbc9bba5c",
+            "ApproximateFirstReceiveTimestamp":"1684923538435"
+         },
+         "messageAttributes":{},
+         "md5OfBody":"74c81279ed84d4c05a9fa9d1b66a8982",
+         "eventSource":"aws:sqs",
+         "eventSourceARN":"arn:aws:sqs:us-east-1:144746102938:ExampleQueue",
+         "awsRegion":"us-east-1"
+      }
+   ]
+}

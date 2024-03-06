@@ -1,0 +1,109 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: "AWS::Serverless-2016-10-31"
+Description: "An example AWS SAM template."
+
+Parameters:
+  VpcSecurityGroup:
+    Type: String
+  VpcSubnet1:
+    Type: String
+  VpcSubnet2:
+    Type: String
+
+Globals:
+  Function:
+    Runtime: python3.12
+    MemorySize: 128
+    Timeout: 120
+    CodeUri: ../src/
+    # VpcConfig:
+    #   SecurityGroupIds:
+    #     - !Ref VpcSecurityGroup
+    #   SubnetIds:
+    #     - !Ref VpcSubnet1
+    #     - !Ref VpcSubnet2
+    Environment:
+      Variables:
+        LOG_LEVEL: "DEBUG"
+
+Resources:
+  SqsLambda:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      FunctionName: "sqs_lambda"
+      Handler: lambda_function.sqs_lambda
+      Description: "lamba function to demonstrate lambda invocation by sqs queue"
+      Environment:
+        Variables:
+          APP_NAME: "sqs_lambda"
+      Events:
+        ConverseSetupQueueEvent:
+          Type: SQS
+          Properties:
+            Queue: !GetAtt LambdaQueue.Arn
+            BatchSize: 1
+
+  ApiLambda:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      FunctionName: "api_lambda"
+      Handler: lambda_function.api_lambda
+      Description: "lamba function to demonstrate lambda invocation by api gateway"
+      Environment:
+        Variables:
+          APP_NAME: "api_lambda"
+      Events:
+        ApiEventGet:
+          Type: Api
+          Properties:
+            Path: /healthcheck
+            Method: get
+        ApiEventPost:
+          Type: Api
+          Properties:
+            Path: /post
+            Method: post
+      Policies:
+      # policy to allow lambda to send message to sqs
+      - Statement:
+        - Sid: SqsSendMessagePolicy
+          Effect: Allow
+          Action:
+            - "sqs:SendMessage*"
+            - "sqs:GetQueueUrl*"
+          Resource: 
+            - !GetAtt LambdaQueue.Arn
+
+  FunctionUrlLambda:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      FunctionName: "function_url_lambda"
+      Handler: lambda_function.function_url_lambda
+      Description: "lamba function to demonstrate lambda invocation by function url"
+      Environment:
+        Variables:
+          APP_NAME: "function_url_lambda"
+
+  LambdaQueue:
+    Type: "AWS::SQS::Queue"
+    Properties:
+      QueueName: "LambdaQueue"
+      VisibilityTimeout: 180
+  
+  SqsLambdaLogGroup:
+    Type: "AWS::Logs::LogGroup"
+    Properties:
+      LogGroupName: "/aws/lambda/sqs_lambda"
+      RetentionInDays: 1
+
+  ApiLambdaLogGroup:
+    Type: "AWS::Logs::LogGroup"
+    Properties:
+      LogGroupName: "/aws/lambda/api_lambda"
+      RetentionInDays: 1
+
+  FunctionUrlLambdaLogGroup:
+    Type: "AWS::Logs::LogGroup"
+    Properties:
+      LogGroupName: "/aws/lambda/function_url_lambda"
+      RetentionInDays: 1
